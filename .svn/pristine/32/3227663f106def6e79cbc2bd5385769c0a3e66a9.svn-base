@@ -1,0 +1,71 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/17 14:49
+ */
+@Controller
+@ResponseBody
+public class UserController {
+
+    @Resource
+    UserService userService;
+
+    @PostMapping("/getUserInfo")
+    public String getUserInfo(HttpSession session){
+        try {
+            User user = (User) session.getAttribute("user");
+//        if (user == null){
+//            return Ajax.error("当前用户未登录，即将退出系统！");
+//        }
+            System.out.println(user.getUserName());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("data",user);
+            return Ajax.success(map);
+        }catch (NullPointerException e){
+            return Ajax.error("用户未登录，处于强制进入状态");
+        }
+    }
+
+    @PostMapping("/updateUserInfo")
+    public String updateUserInfo(HttpSession session,String userName, String sex ,String height ,String weight ,String goalType){
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        boolean is = userService.updateUserInfo(userId,userName,sex,height,weight,goalType);
+        if (!is){
+            return Ajax.error("修改失败，请刷新后重试");
+        }
+        return Ajax.success();
+    }
+
+    @PostMapping("/updateUserPassword")
+    public String updateUserPassword(HttpSession session,String oldpsw,String newpsw){
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        if (!oldpsw.equals(user.getPsw())){
+            return Ajax.error("您的旧密码错误，请重新输入！");
+        }
+        //判断密码是否正确
+        boolean is = userService.updateUserPassword(userId,newpsw);
+        if (!is){
+            return Ajax.error("密码修改失败，请刷新后重试");
+        }
+        return Ajax.success();
+    }
+}
+
+

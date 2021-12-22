@@ -1,0 +1,86 @@
+body{
+    zoom:1.2;
+}
+#header, #left, #main, #footer{
+	/*固定定位*/
+	position: fixed;
+    /* transform: scale(1.2); */
+    
+}
+
+#header{
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #000000;
+	height: 40px;
+	color: #0280BD;
+}
+
+#left{
+	top: 40px;
+	left: 0;
+	bottom: 0;
+	background: #d0e7c6;
+	width: 200px;
+    font-size: 30px;
+    /* font-family: 'FZShuTi'; */
+    font-family: '华文行楷';
+    
+}
+#topName{
+    font-size: 25px;
+    font-family: 'FZShuTi';
+}
+#footer{
+	left: 200px;
+	right: 0;
+	bottom: 0;
+	line-height: 30px;
+	text-align: center;
+	background: #353535;
+	color: #0398E0;
+}
+
+#main{
+	top: 40px;
+	left: 200px;
+	right: 0;
+	bottom: 30px;
+}
+
+
+/**/
+.navbar-brand{
+	color: #B3D4FC;
+}
+.navbar-brand:hover{
+	color: #2E9134;
+}
+
+#header .navbar-right a {
+	color: #FFFFFF;
+}
+
+#header .navbar-right li:hover a {
+	background: none;
+}
+#iframe{
+	border: none;
+	height: 100%;
+	width: 100%;
+}
+#text1{
+	width: 60px;
+}
+#checkbox2{
+	margin-left: 40px;
+}
+
+.treeleft{
+    margin-top: 5%;
+    font-size: 30px;
+}
+.treeleft :hover{
+    color: greenyellow;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="static/css/zui.min.css" />
+    <link href="static/lib/datetimepicker/datetimepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/back/userManage.css" />
+</head>
+<body>
+<h1 class="text-center">用户管理</h1>
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <span class="input-group-addon">登录名称</span>
+                <input type="text" class="form-control" placeholder="输入昵称" id="Susername">
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <div class="input-group">
+                <button class="btn btn-primary" type="button" onclick="doSearch()">查询</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>登录昵称</th>
+                    <th>性别</th>
+                    <th>角色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody" style="text-align: center">
+                <tr>
+                    <td colspan="5">暂无用户信息</td>
+                </tr>
+
+                </tbody>
+            </table>
+            <ul class="pager" data-ride="pager" id="pager"></ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="updateUserInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">编辑用户</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                <div class="input-group">
+                    <span class="input-group-addon">昵称</span>
+                    <input type="text" class="form-control"  id="Uusername">
+                </div>
+                </p>
+                <p>
+                    <div class="input-group">
+                        <span class="input-group-addon">性别</i></span>
+                        <div class="form-control">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="男" checked="checked" class="sex" id="male"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="女" class="sex" id="female"> 女
+                            </label>
+                        </div>
+                    </div>
+                </p>
+                <p>
+                    <div class="input-group">
+                        <span class="input-group-addon">角色</span>
+                        <div class="form-control">
+                            <label class="radio-inline">
+                                <input type="radio" name="role" value="0" checked="checked" class="roleId" id="admin"> 管理员
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="role" value="1" class="roleId" id="user"> 用户
+                            </label>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="updateInfo()">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+        <script src="static/js/jquery-2.1.4.js"></script>
+        <script src="static/js/zui.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="static/lib/datetimepicker/datetimepicker.min.js"></script>
+        <script src="static/js/layer/layer.js"></script>
+        <script src="static/js/back/userManage.js"></script>
+</body>
+</html>

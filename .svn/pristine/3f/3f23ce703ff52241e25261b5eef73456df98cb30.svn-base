@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxx.exercise.dao.UserDao">
+
+
+    <resultMap id="bodyMap" type="com.school.pojo.BodyInfo">
+
+    </resultMap>
+    <!--登录查询-->
+    <select id="login" resultType="com.hxx.exercise.pojo.User">
+        select * from user_info where acc=#{acc}
+    </select>
+
+    <select id="isAcc" resultType="com.hxx.exercise.pojo.User">
+        select * from user_info where acc=#{acc}
+    </select>
+
+    <insert id="reg">
+        insert into user_info values (SEQ_USER_INFO.NEXTVAL,#{userName},#{sex},#{acc},#{psw},#{roleId}
+        ,#{statusId},#{height},#{weight},#{goalType})
+    </insert>
+
+
+    <insert id="addBodyCard">
+        insert into body_info values (SEQ_BODY_INFO.NEXTVAL,#{userId},#{height},#{weight},#{bodyPercent},#{muscle},#{bmi},SYSDATE)
+    </insert>
+
+    <select id="getBodyInfo" resultMap="bodyMap">
+        SELECT * FROM(SELECT ROWNUM as rn ,a1.* FROM (SELECT * FROM BODY_INFO
+        WHERE USERID = #{userId}
+
+    </select>
+
+</mapper>

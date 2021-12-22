@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!--
+    author:hxx
+    date：
+    description：
+    version:1.0
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>健康打卡</title>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="/static/css/zui.min.css" />
+   <!-- <link rel="stylesheet" href="/static/css/bodyCard.css" /> -->
+</head>
+<body>
+    <h2 class="text-center>请在此记录您每天的运动量，饮食，系统会根据您的记录测算是否达标</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <button class="btn btn-primary" onclick="addHealth()">添加每日数据</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="input-group">
+                    <span class="input-group-addon">打卡时间</span>
+                    <input type="text" class="form-control form-date" placeholder="选择或者输入日期：yyyy-MM-dd" id="btime">
+                    <span class="input-group-addon">至</span>
+                    <input type="text" class="form-control form-date" placeholder="选择或者输入日期：yyyy-MM-dd" id="etime">
+                </div>
+            </div>
+            <div class="col-xs-4">
+
+            </div>
+            <div class="col-xs-2">
+                <div class="input-group">
+                    <button class="btn btn-primary" type="button" onclick="search()">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>今日饮食</th>
+                        <th>运动时长</th>
+                        <th>运动强度</th>
+                        <th>今日所需卡路里</th>
+                        <th>实际摄入卡路里</th>
+                        <th>达标量</th>
+                        <th>打卡日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablesBody" style="text-align: center">
+                    <!--以下是测试代码-->
+                        <tr>
+                            <td colspan="9">没有搜索到相关信息</td>
+                        </tr>
+                    <!---------------->
+                    </tbody>
+                </table>
+
+                <ul class="pager" data-ride="pager" id="pager"></ul>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span><span class="sr-only">关闭</span></button>
+                                <h4 class="modal-title">添加每日卡路里数据</h4>
+                            </div>
+                            <div class="modal-body" style="margin-top: 20px">
+
+                                
+                            
+
+                         <h5 class="modal-title">食物热量查询</h5>
+                            <div class="input-group">
+                                    <span class="input-group-addon">食物名称</span>
+                                    <input type="text" class="form-control" placeholder="输入食物名称" id="foodName">
+                                    <span class="input-group-addon">重量：</span>
+                                    <input type="text" class="form-control" placeholder="重量（g） 默认为100g" id="foodWeight" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                    <span class="input-group-addon">卡路里量</span>
+                                    <input type="text" class="form-control" disabled="disabled" id="cals" >
+                            </div>
+                            
+                            <div class="row">
+                                    <div class="col-xs-8">
+                                    </div>
+                                    <div class="col-xs-2">                         
+                                        <button type="button" class="btn btn-primary" onclick="findFood()">查询</button>
+                                    </div>   
+                                    <div class="col-xs-2">                         
+                                        <button type="button" class="btn btn-default" onclick="reFindFood()">重置</button>  
+                                    </div>   
+
+                            </div>
+                            
+
+                            <h5 class="modal-title">输入数据</h5>
+                                
+                            <div class="input-group">
+                                <span class="input-group-addon">早餐</span>
+                                <input type="text" class="form-control" placeholder="输入食物名称，可不填" id="food1">
+                                <span class="input-group-addon">重量</span>
+                                <input type="text" class="form-control" placeholder="输入重量（g），可不填" id="weight1" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                <span class="input-group-addon">卡路里量</span>
+                                <input type="text" class="form-control" placeholder="输入卡路里量（cal），可不填" id="cal1" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">午餐</span>
+                                <input type="text" class="form-control" placeholder="输入食物名称，可不填" id="food2">
+                                <span class="input-group-addon">重量</span>
+                                <input type="text" class="form-control" placeholder="输入重量（g），可不填" id="weight2" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                <span class="input-group-addon">卡路里量</span>
+                                <input type="text" class="form-control" placeholder="输入卡路里量（cal），可不填" id="cal2" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">晚餐</span>
+                                <input type="text" class="form-control" placeholder="输入食物名称，可不填" id="food3">
+                                <span class="input-group-addon">重量</span>
+                                <input type="text" class="form-control" placeholder="输入重量（g），可不填" id="weight3" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                <span class="input-group-addon">卡路里量</span>
+                                <input type="text" class="form-control" placeholder="输入卡路里量（cal），可不填" id="cal3" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">加餐</span>
+                                <input type="text" class="form-control" placeholder="输入食物名称，可不填" id="food4">
+                                <span class="input-group-addon">重量</span>
+                                <input type="text" class="form-control" placeholder="输入重量（g），可不填" id="weight4" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                <span class="input-group-addon">卡路里量</span>
+                                <input type="text" class="form-control" placeholder="输入卡路里量（cal），可不填" id="cal4" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">运动项目</span>
+                                <input type="text" class="form-control" placeholder="" id="exerciseName">
+                                <span class="input-group-addon">运动强度</span>
+                                <select class="form-control" id="exerciseLevel">
+                                    <option value="1">无运动或少量运动</option>
+                                    <option value="2">轻度运动（如：走路）</option>
+                                    <option value="3">中度运动（如：跑步，瑜伽，骑车）</option>
+                                    <option value="4">积极运动（如：球类运动，游泳，健身等）</option>
+                                    <option value="5">专业运动（如参加比赛，马拉松，长跑等高强度）</option>
+                                </select>
+                                <span class="input-group-addon">运动时间（小时）</span>
+                                <input type="text" class="form-control" placeholder="输入运动时间，可不填" id="exerciseTime" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" onclick="addOk()">提交</button>
+                            </div>
+                        
+                        
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="alert" style="font-size: 15px;line-height: normal;">知道每日所需卡路里，才能更有效的减肥和管理身材。人体每天所需要的热量就是人体基础代谢所需要的基本热量、体力活动所需要的热量和消化食物所需要的热量之和。<br>
+
+            1.2=少量活动 （办公室工作，久坐或站立为主；/居家：久坐不动，打字阅读或者上网；/运动：几乎从来不运动）<br>
+            
+            1.375=轻度活动 （工作时经常走动，如售货员、服务员、讲课等；/居家：有不少家务活，需要较多走动；/运动：有散步等轻度活动）<br>
+            
+            1.55=中度活动 （工作中有不少体力活要做，如电工、车床操作等；/居家：很少能坐下来，需要做较多重家务活或者打理菜园花园；/运动：每周固定锻炼好几次）<br>
+            
+            1.725=积极活动 （从事比较重体力活得工作，例如建筑、器械维修等；/居家：经常举重、搬运重物；/运动：每天都参加体育运动例如赛跑、登山自行车等）<br>
+            
+            1.9=专业运动（参加比赛，马拉松，长跑等高强度运动，且长时间处于高度运动状态，需要及时补充葡萄糖和水分）
+        </div>
+    </div>
+    <script src="/static/js/jquery-2.1.4.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+    <script src="/static/js/zui.min.js"></script>
+    <script src="/static/lib/datetimepicker/datetimepicker.min.js"></script>
+    <script src="/static/js/front/healthCard.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import jdk.nashorn.internal.ir.IfNode;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 17:00
+ */
+@Controller
+@ResponseBody
+public class RegisterController {
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/doRegister")
+    public String doRegister(String userName,String acc,String psw,String sex,String height,String weight ,String goalType){
+//        System.out.println(userName+acc+psw+sex+height+weight+goalType);
+        //进入数据库判断是否存在该账号
+        User isUser = userService.isAcc(acc);
+
+        if (isUser !=null){
+            return Ajax.error("该账号已存在，请重新输入！");
+        }
+        User user = new User(0,userName,sex,acc,psw,1,1,Double.valueOf(height),Double.valueOf(weight),Integer.valueOf(goalType));
+        boolean isReg = userService.reg(user);
+        if (!isReg){
+            return Ajax.error("注册失败，请刷新后再试！");
+        }
+        //注册成功提示
+        return Ajax.success();
+    }
+}

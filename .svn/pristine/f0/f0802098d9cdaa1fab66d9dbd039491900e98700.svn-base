@@ -1,0 +1,164 @@
+//获取用户信息
+var userInfo = undefined;
+getUserInfo();
+
+function getUserInfo(){
+    $.ajax({
+        url:"getUserInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+            
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                var user = data.data.data;
+                userInfo = user;
+                userInfoShow(user);
+            }
+            // location.href = "login";
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+
+function userInfoShow(user){
+    $('#acc').val(user.acc);
+    $('#userName').val(user.userName);
+    $('#sex').val(user.sex);
+    $('#height').val(user.height);
+    $('#weight').val(user.weight);
+    switch (user.goalType) {
+            case 1:
+            $('#goal').val('减脂');
+            break;
+            case 2:
+            $('#goal').val('塑形');
+            break;
+            case 3:
+            $('#goal').val('增重');
+            break;
+            case 4:
+            $('#goal').val('增肌');
+            break;
+            case 5:
+            $('#goal').val('其它');
+            break;
+    
+        default:
+            break;
+    }
+
+
+    $('#updateUserName').val(user.userName);
+    $('#updateHeight').val(user.height);
+    $('#updateWeight').val(user.weight);
+
+    
+}
+
+function updateUserInfo(){
+    var userName = $('#updateUserName').val();
+    var sex = $("input[type='radio']:checked").val();
+    var height = $('#updateHeight').val();
+    var weight = $('#updateWeight').val();
+    var goalType = document.getElementsByClassName("goal");
+    var goalTypes = "";
+    for (var i = 0; i < goalType.length; i++) {
+        if (goalType[i].checked){
+            goalTypes = goalType[i].value;
+        }
+    }
+    if (userName == '') {
+        layer.msg('请输入正确的昵称', {icon: 2});
+        return;
+    }
+    if (height == '') {
+        layer.msg('请输入身高', {icon: 2});
+        return;
+    }
+    if (weight == '') {
+        layer.msg('请输入体重', {icon: 2});
+        return;
+    }
+
+    $.ajax({
+        url:"updateUserInfo",
+        type:"post",
+        dataType:"JSON",
+        data:{
+            userName,
+            sex,
+            height,
+            weight,
+            goalType:goalTypes
+        },
+        success: function(resp) {
+            if (resp.errmsg === 'ok'){
+                //-----关闭modal-------//
+                // $('#myModal').modal('hide', 'fit');
+                layer.msg('修改成功', {icon: 1});
+                //----------获取用户打卡数据--------//
+                getUserInfo();
+                return ;
+            }
+            
+            layer.alert(resp.errmsg);
+        },
+        error: function(err) {
+            console.log(err)
+        }
+    })
+}
+//修改密码
+function updatePassword(){
+    var oldpsw=$("#oldpsw").val();
+	var oldpsw2=$("#oldpsw2").val();
+	var newpsw=$("#newpsw").val();
+
+	if(oldpsw==null || oldpsw==""){
+		layer.alert("请输入旧密码")
+		return;
+	}
+	if(oldpsw2==null || oldpsw==""){
+		layer.alert("请确认新密码")
+		return;
+	}
+	if(oldpsw2!=newpsw){
+		layer.alert("两次密码不一致，请重新输入")
+		return;
+	};
+
+    //RSA加密模块
+	// var encrypt = new JSEncrypt();
+	// encrypt.setPublicKey(publicKey);
+	//  oldpsw = encrypt.encrypt(oldpsw);
+	//  newpsw = encrypt.encrypt(newpsw);
+
+	$.ajax({
+		url:"updateUserPassword",
+		type:"post",
+		dataType:"json",
+		data:{
+            oldpsw,
+			newpsw
+		},
+		success:function(data){
+			$("#oldpsw").val("");
+			$("#oldpsw2").val("");
+			$("#newpsw").val("");
+			if (data.errmsg==='ok'){
+				layer.alert('修改成功');
+				return ;
+			}
+			layer.alert(data.errmsg);
+		},
+		
+		error:function(err){
+			console.log(err)
+		},
+	})
+}

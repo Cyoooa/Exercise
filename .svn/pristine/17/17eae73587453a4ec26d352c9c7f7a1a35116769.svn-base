@@ -1,0 +1,32 @@
+#box{
+    margin-top: 10%;
+    transform: scale(1.2);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: 100% 100%;
+}
+#divs{
+    width: 90%;
+    margin: 15px auto;
+}
+#register-box{
+    margin-top: 50px;
+
+    width: 600x;
+    height: 600px;
+}
+.logintext{
+    width: 90%;
+    margin: 0 auto;
+    font-size: 30px;
+    font-weight: 700;
+    color: #F1A325;
+}
+.atext{
+    margin: 15px auto;
+}
+
+#login‐box{ width: 600px; background: #fff; margin: 50px auto;max-width: 95%;  padding: 20px; border-radius: 10px;  }

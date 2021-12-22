@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wsq.exercise.dao.UserDao">
+
+    <resultMap id="adminMap" type="com.wsq.exercise.pojo.Admin">
+
+    </resultMap>
+    <resultMap id="usersMap" type="com.wsq.exercise.pojo.Admin">
+
+    </resultMap>
+    <resultMap id="historyMap" type="com.wsq.exercise.pojo.History">
+
+    </resultMap>
+
+    <insert id="reg">
+        insert into user values(null,#{userName},#{password},#{sex},#{phone},#{nickName},#{roleId})
+    </insert>
+    <!--登录查询-->
+    <select id="backLogin" resultType="com.wsq.exercise.pojo.Admin">
+        select * from user where USERNAME =#{username}
+    </select>
+
+    <select id="getUserInfo" resultMap="usersMap">
+        SELECT * FROM USER WHERE roleid &lt; 2
+        <if test="username!=null">
+            AND nickname LIKE #{username}
+        </if>
+        LIMIT #{page} OFFSET #{curr}
+
+    </select>
+
+
+    <select id="getUserInfoCount" resultType="int">
+        SELECT count(*) FROM USER WHERE roleid &lt; 2
+        <if test="username!=null">
+            AND nickname LIKE #{username}
+        </if>
+    </select>
+
+<!--    <delete id="delUser">-->
+<!--        delete from user where userid = #{userId}-->
+<!--    </delete>-->
+    <update id="delUser">
+        update user set roleid = 2 where userid = #{userId}
+    </update>
+    <update id="updateUser">
+        update  user set nickname = #{nickName}, sex = #{sex} , roleId = #{roleId} where userid = #{userId}
+    </update>
+
+
+    <update id="updateUsers">
+        update  user set nickname = #{nickName}, sex = #{sex} , phone = #{phone} where username = #{userName}
+    </update>
+    <insert id="addUserInfo">
+        insert into user values(NULL,#{userName},#{password},#{phone},#{email})
+    </insert>
+<!--    boolean doSubmit(@Param("number")Integer number, @Param("score")Double score, @Param("username")String username);-->
+
+    <insert id="doSubmit">
+        insert into history_info values (null,#{username},#{number},#{score},SYSDATE())
+    </insert>
+    <select id="getHistoryInfo" resultMap="historyMap">
+        SELECT * FROM history_info WHERE 1=1
+        <if test="username!=null">
+            AND username LIKE #{username}
+        </if>
+        <if test="btime!=null">
+            AND datetime &gt;= #{btime}
+        </if>
+        <if test="etime!=null">
+            AND datetime &lt;= #{etime}
+        </if>
+        order by datetime DESC
+        LIMIT #{page} OFFSET #{curr}
+
+    </select>
+
+    <select id="getHistoryInfoCount" resultType="int">
+        SELECT count(*) FROM history_info WHERE 1=1
+        <if test="username!=null">
+            AND username LIKE #{username}
+        </if>
+        <if test="btime!=null">
+            AND datetime &gt;= #{btime}
+        </if>
+        <if test="etime!=null">
+            AND datetime &lt;= #{etime}
+        </if>
+    </select>
+
+    <select id="getCountNum" resultType="int">
+        SELECT count(*) FROM history_info
+
+    </select>
+
+    <select id="getSexInfo" resultType="int">
+        SELECT count(*) FROM user where sex = #{sex}
+    </select>
+
+    <select id="getScoreInfo" resultMap="historyMap">
+        select * from history_info
+    </select>
+
+    <update id="updatePsw">
+        update USER set password = #{newpsw} where username = #{username}
+    </update>
+
+</mapper>
+

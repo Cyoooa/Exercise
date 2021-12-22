@@ -1,0 +1,76 @@
+package com.hxx.exercise.controller;
+
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.HealthInfo;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+
+@Controller
+@ResponseBody
+public class HealthController {
+
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/addHealthInfo")
+    public String addHealthInfo(String foodInfo, String exerciseTime, String exerciseLevel, String calNeed, String calReal, String calGoal, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        HealthInfo healthInfo = new HealthInfo(0,user.getUserId(),foodInfo,Double.valueOf(exerciseTime),Integer.valueOf(exerciseLevel),Double.valueOf(calNeed),Double.valueOf(calReal),Double.valueOf(calGoal),null);
+        boolean is = userService.addHealthInfo(healthInfo);
+        if (!is){
+            return Ajax.error("插入数据失败，请稍后重试！");
+        }
+        return Ajax.success();
+    }
+
+    @PostMapping("/getHealthInfo")
+    public String getHealthInfo(HttpSession session,String btime,String etime,String pageSize,String currPage){
+        if (btime==null||"".equals(btime)){
+            btime = null;
+        }else {
+            btime+= " 00:00:00";
+        }
+        if (etime==null||"".equals(etime)){
+            etime = null;
+        }else {
+            etime+= " 23:59:59";
+        }
+        int curr = 1;
+        int size = 1000;
+        if (currPage!=null){
+            curr = Integer.parseInt(currPage);
+            size = Integer.parseInt(pageSize);
+        }
+        int beginIndex = (curr-1)*size+1;
+        int lastIndex = beginIndex+size;
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        List<HealthInfo> healthInfos = userService.getHealthInfo(userId,btime,etime,beginIndex, lastIndex);
+        int count = userService.getHealthInfoCount(userId,btime,etime);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("healthInfo",healthInfos);
+        map.put("count",count);
+        return Ajax.success(map);
+
+    }
+
+    @PostMapping("/delHealthInfo")
+    public String delHealthInfo(String healthId){
+        boolean is = userService.delHealthInfo(healthId);
+        if (!is){
+            return Ajax.error("删除失败，请稍后再试");
+        }
+
+        return Ajax.success();
+    }
+}

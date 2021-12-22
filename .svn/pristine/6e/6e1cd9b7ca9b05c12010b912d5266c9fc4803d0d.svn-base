@@ -1,0 +1,49 @@
+package com.hxx.exercise.dao;
+
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.HealthInfo;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.pojo.VideoInfo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:11
+ */
+public interface UserDao {
+    User login(String accName);
+
+    User isAcc(String acc);
+
+    boolean reg(User user);
+
+    boolean addBodyCard(BodyInfo bodyInfo);
+
+    List<BodyInfo> getBodyInfo(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime, @Param("beginIndex")int beginIndex, @Param("lastIndex")int lastIndex);
+
+    int getBodyInfoCount(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime);
+
+    boolean changeInit(BodyInfo bodyInfo);
+
+    boolean delBodyInfo(String bodyId);
+
+    boolean addHealthInfo(HealthInfo healthInfo);
+
+    String getFoodCal(String foodName);
+
+    List<HealthInfo> getHealthInfo(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime, @Param("beginIndex")int beginIndex, @Param("lastIndex")int lastIndex);
+
+    int getHealthInfoCount(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime);
+
+    boolean delHealthInfo(String healthId);
+
+    boolean updateUserInfo(@Param("userId")int userId, @Param("userName")String userName, @Param("sex")String sex, @Param("height")String height, @Param("weight")String weight, @Param("goalType")String goalType);
+
+    boolean updateUserPassword(@Param("userId")int userId, @Param("password")String password);
+
+    List<VideoInfo> getHotVideo(@Param("beginIndex")int beginIndex, @Param("lastIndex")int lastIndex, @Param("videoName")String videoName);
+}

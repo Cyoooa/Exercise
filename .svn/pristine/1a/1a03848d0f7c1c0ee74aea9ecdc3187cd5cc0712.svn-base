@@ -1,0 +1,128 @@
+//获取用户信息
+getUserInfo();
+//获取打卡信息
+getBodyInfo();
+function getUserInfo(){
+    var userInfo = document.getElementById("userInfo");
+
+    $.ajax({
+        url:"getUserInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                var user = data.data.data;
+                sumBMI(user);
+            }
+            // location.href = "login";
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+function getBodyInfo(){
+    $.ajax({
+        url:"getBodyInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                var user = data.data.data;
+                sumBMI(user);
+            }
+
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+
+
+//BMI计算
+function sumBMI(user){
+    var userInfos =$('#bodyInfo');
+    let info=undefined;
+    let bmi = BMI(user.height,user.weight).toFixed(2);
+
+    if (bmi<=18.5) {
+        info = '过轻';
+    } else if (bmi>18.5 && bmi <= 24) {
+        info = '正常';
+    } else if (bmi>24 && bmi <= 28) {
+        info = '过重';
+    } else if (bmi>28 && bmi <= 32) {
+        info = '肥胖';
+    }else{
+        info = '过度肥胖';
+    }
+    // console.log(bmi);
+    userInfos.html('您好，根据您的身高和体重计算，您当前的BMI为'+bmi+",属于"+info+'状态!') ;
+}
+function BMI(height,weight){
+    let heights = height/100;
+    let bmi = weight / (heights*heights);
+    return bmi;
+}
+
+
+function playCard(){
+    $('#myModal').modal();
+}
+
+function addOk(){
+    var height = $('#height').val();
+    var weight = $('#weight').val();
+    var bodyPercent = $('#bodyPercent').val();
+    var muscle = $('#muscle').val();
+
+    if (height == ""){
+        layer.alert("请输入身高！");
+        return;
+    }
+    if (weight == ""){
+        layer.alert("请输入体重！");
+        return;
+    }
+    let bmi =BMI(height,weight).toFixed(2);
+    $.ajax({
+        url:"addBodyCard",
+        type:"post",
+        dataType:"JSON",
+        data:{
+            height,
+            weight,
+            bodyPercent,
+            muscle,
+            bmi
+        },
+        success: function(resp) {
+            if (resp.errmsg === 'ok'){
+                //-----关闭modal-------//
+                $('#myModal').modal('hide', 'fit');
+                layer.alert("添加成功");
+                //----------获取用户打卡数据--------//
+                return ;
+            }
+            
+            layer.alert(resp.errmsg);
+        },
+        error: function(err) {
+            console.log(err)
+        }
+    })
+    
+    
+}
+
+
+

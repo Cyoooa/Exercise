@@ -1,0 +1,54 @@
+//获取用户信息
+getUserInfo();
+
+function getUserInfo(){
+    var userInfo = document.getElementById("userInfo");
+
+    $.ajax({
+        url:"getUserInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                var user = data.data.data;
+                sumBMI(user);
+            }
+            // location.href = "login";
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+//BMI计算
+function sumBMI(user){
+    var userInfos =$('#bodyInfo');
+    let info=undefined;
+    let bmi = BMI(user.height,user.weight).toFixed(2);
+
+    if (bmi<=18.5) {
+        info = '过轻';
+    } else if (bmi>18.5 && bmi <= 24) {
+        info = '正常';
+    } else if (bmi>24 && bmi <= 28) {
+        info = '过重';
+    } else if (bmi>28 && bmi <= 32) {
+        info = '肥胖';
+    }else{
+        info = '过度肥胖';
+    }
+    // console.log(bmi);
+    userInfos.html('您好，根据您的身高和体重计算，您当前的BMI为'+bmi+",属于"+info+'状态!') ;
+}
+function BMI(height,weight){
+    let heights = height/100;
+    let bmi = weight / (heights*heights);
+    return bmi;
+}
+
+
+

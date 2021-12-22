@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+    author:hxx
+    date：
+    description：
+    version:1.0
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>健身打卡</title>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="/static/css/zui.min.css" />
+   <!-- <link rel="stylesheet" href="/static/css/bodyCard.css" /> -->
+</head>
+<body>
+    <h2 class="text-center" id="bodyInfo">您好，根据您的身高和体重计算，您当前的BMI为18</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <button class="btn btn-primary" onclick="playCard()">一键打卡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>身高(cm)</th>
+                        <th>体重(kg)</th>
+                        <th>体脂率(%)</th>
+                        <th>肌肉量(%)</th>
+                        <th>打卡时间</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody" style="text-align: center">
+                    <!--以下是测试代码-->
+                        <tr>
+                            <td>1</td>
+                            <td>188.4</td>
+                            <td>85.9</td>
+                            <td>18.5</td>
+                            <td>35.7</td>
+                            <td>2021-03-17</td>
+                        </tr>
+                    <!---------------->
+                    </tbody>
+                </table>
+
+                <ul class="pager" data-ride="pager" id="pager"></ul>
+
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"></span><span class="sr-only">关闭</span></button>
+                                <h4 class="modal-title">添加健康数据</h4>
+                            </div>
+                            <div class="modal-body" style="margin-top: 20px">
+
+                            <div class="input-group">
+                                <span class="input-group-addon">*身高</span>
+                                <input type="text" class="form-control" placeholder="输入身高" id="height" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                            </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">*体重</span>
+                                    <input type="text" class="form-control" placeholder="输入体重" id="weight" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">体脂率(选填)</span>
+                                    <input type="text" class="form-control" placeholder="输入体脂率" id="bodyPercent" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">肌肉量(选填)</span>
+                                    <input type="text" class="form-control" placeholder="输入肌肉量" id="muscle" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+                                </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" onclick="addOk()">提交</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery-2.1.4.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+    <script src="/static/js/zui.min.js"></script>
+    <script src="/static/js/front/bodyCard.js"></script>
+</body>
+</html>

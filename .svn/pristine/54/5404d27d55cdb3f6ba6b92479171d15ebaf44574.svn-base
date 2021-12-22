@@ -1,0 +1,29 @@
+#header{
+    width: 90%;
+    margin: 5px auto;
+}
+#search-box{
+    width: 500px;
+    margin: 10px auto;
+    max-width: 90%;
+}
+.item-box{
+    border: 1px solid #cccccc;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.item-box:hover{
+    box-shadow: 3px 3px 3px #cccccc;
+}
+
+.item-box a{
+    color: #333333;
+    text-decoration: none;
+}
+
+.item-box a :hover{
+    color: orange;
+}
+

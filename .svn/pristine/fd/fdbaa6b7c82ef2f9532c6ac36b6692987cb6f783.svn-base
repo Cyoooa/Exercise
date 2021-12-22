@@ -1,0 +1,122 @@
+package com.hxx.exercise.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description User对象
+ * @date 2021/3/16 13:53
+ */
+
+public class User {
+    private Integer userId;
+    private String userName;
+    private String sex;
+    private String acc;
+    private String psw;
+    private Integer roleId;
+    private Integer statusId;
+    private double height;
+    private double weight;
+    private Integer goalType;
+
+    public User() {
+    }
+
+    public User(Integer userId, String userName, String sex, String acc, String psw, Integer roleId, Integer statusId, double height, double weight, Integer goalType) {
+        this.userId = userId;
+        this.userName = userName;
+        this.sex = sex;
+        this.acc = acc;
+        this.psw = psw;
+        this.roleId = roleId;
+        this.statusId = statusId;
+        this.height = height;
+        this.weight = weight;
+        this.goalType = goalType;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAcc() {
+        return acc;
+    }
+
+    public void setAcc(String acc) {
+        this.acc = acc;
+    }
+
+    public String getPsw() {
+        return psw;
+    }
+
+    public void setPsw(String psw) {
+        this.psw = psw;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public Integer getGoalType() {
+        return goalType;
+    }
+
+    public void setGoalType(Integer goalType) {
+        this.goalType = goalType;
+    }
+}

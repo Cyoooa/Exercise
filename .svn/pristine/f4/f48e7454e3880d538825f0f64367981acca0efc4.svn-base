@@ -1,0 +1,31 @@
+package com.hxx.exercise.dao;
+
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:11
+ */
+public interface UserDao {
+    User login(String accName);
+
+    User isAcc(String acc);
+
+    boolean reg(User user);
+
+    boolean addBodyCard(BodyInfo bodyInfo);
+
+    List<BodyInfo> getBodyInfo(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime, @Param("beginIndex")int beginIndex, @Param("lastIndex")int lastIndex);
+
+    int getBodyInfoCount(@Param("userId") int userId, @Param("btime")String btime, @Param("etime")String etime);
+
+    boolean changeInit(BodyInfo bodyInfo);
+
+    boolean delBodyInfo(String bodyId);
+}

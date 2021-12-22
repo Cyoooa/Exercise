@@ -1,0 +1,64 @@
+package com.hxx.exercise.service.Impl;
+
+import com.hxx.exercise.dao.UserDao;
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:10
+ */
+@Service
+public class UserServiceImpl implements UserService {
+    @Resource
+    UserDao userDao;
+
+    @Override
+    public User login(String accName) {
+        return userDao.login(accName);
+    }
+
+    @Override
+    public User isAcc(String acc) {
+        return userDao.isAcc(acc);
+    }
+
+    @Override
+    public boolean reg(User user) {
+        return userDao.reg(user);
+    }
+
+    @Override
+    public boolean addBodyCard(BodyInfo bodyInfo) {
+        return userDao.addBodyCard(bodyInfo);
+    }
+
+    @Override
+    public List<BodyInfo> getBodyInfo(int userId, String btime, String etime, int beginIndex, int lastIndex) {
+        return userDao.getBodyInfo(userId, btime, etime, beginIndex, lastIndex);
+    }
+
+    @Override
+    public int getBodyInfoCount(int userId, String btime, String etime) {
+        return userDao.getBodyInfoCount(userId, btime, etime);
+    }
+
+    @Override
+    public boolean changeInit(BodyInfo bodyInfo) {
+        return userDao.changeInit(bodyInfo);
+    }
+
+    @Override
+    public boolean delBodyInfo(String bodyId) {
+        return userDao.delBodyInfo(bodyId);
+    }
+
+
+}

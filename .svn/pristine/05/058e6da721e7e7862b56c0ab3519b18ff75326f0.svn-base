@@ -1,0 +1,350 @@
+$(".form-date").datetimepicker(
+    {
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: "yyyy-mm-dd"
+    }
+    );
+    var pageSize = 5;
+    var currPage = 1;
+    var pager = $('#pager');
+    var height = 0;
+    var weight = 0;
+    var sex = '';
+
+    getUserInfo();//获取用户信息
+
+    function getUserInfo(){
+        $.ajax({
+            url:"getUserInfo",
+            type:"post",
+            dataType:"json",
+            data:{
+                
+            },
+            success:function(data){
+                if (data.errmsg==='ok'){
+                    var user = data.data.data;
+                    height = user.height;
+                    weight = user.weight;
+                    sex = user.sex;
+                }
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    }
+
+
+
+
+
+    getHealthInfo();
+    pageInit();
+function changePage(newState , oldState) {
+    if(newState.page === oldState.page){
+        return ;
+    }
+    // console.log('点击了页码的切换' ,newState , oldState);
+    currPage = newState.page;
+    getHealthInfo();
+}
+function pageInit() {
+    pager.pager({
+        page :currPage,
+        recTotal : 0,
+        recPerPage : pageSize,
+        onPageChange : changePage
+    })
+}
+
+function search(){
+    currPage = 1;
+    getHealthInfo();
+}
+function getHealthInfo(){
+    var btime = $('#btime').val();
+    var etime = $('#etime').val();
+    $.ajax({
+        url:"getHealthInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+            btime,etime,pageSize,currPage
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                healthInfoShow(data.data.healthInfo);
+                pager.data('zui.pager').set(currPage , data.data.count , null);
+            }
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+
+
+function healthInfoShow(data){
+    var table = $('#tablesBody');
+    table.html("");
+    var str = ``;
+    if (data.length>0) {   
+        
+        for (let i = 0; i <data.length ; i++) {
+            var level='';
+            switch (data[i].exerciseLevel) {
+                case '1':
+                    level = '少量（或无）运动'
+                    break;
+                case '2':
+                    level = '轻度运动'
+                    break;
+                case '3':
+                    level = '中度运动'
+                    break;
+                case '4':
+                    level = '积极运动'
+                    break;
+                case '5':
+                    level = '专业运动'
+                    break;
+                default:
+                    break;
+            }
+            str += `
+            <tr>
+                <td>${data[i].healthId}</td>
+                <td>${data[i].foodInfo}</td>
+                <td>${data[i].exerciseTime}</td>
+                <td>${level}</td>
+                <td>${data[i].calNeed}</td>
+                <td>${data[i].calReal}</td>
+                <td>${data[i].calGoal}</td>
+                <td>${data[i].healthTime}</td>
+                <td><button onclick='del(${data[i].healthId})' class=\"btn btn-warning\">删除</button></td>
+                </tr>`;
+            }
+        table.html(str);
+        return;
+    }
+    str += `					  <tr>
+    <td colspan="8">没有搜索到相关信息</td>
+</tr>`
+    table.html(str);
+    
+}
+
+function del(healthId){
+    layer.confirm('是否要删除该记录（此操作不可恢复！）？', {
+        btn: ['确定','取消'] //按钮
+    }, function (){
+        $.ajax({
+            url: "delHealthInfo",
+            type: "post",
+            dataType: "JSON",
+            data: {
+                healthId
+            },
+            success :function (resp){
+                if(resp.errmsg === 'ok'){
+                    layer.msg('删除成功', {icon: 1});
+                    getHealthInfo();
+                    return ;
+                }
+                layer.msg(resp.errmsg, {icon: 2});
+            }
+        })
+    },function (){
+        return;
+    });
+}
+
+
+function addHealth(){
+    $('#myModal').modal();
+}
+
+function findFood(){
+    var foodName = $('#foodName').val().trim();
+    if (foodName=='') {
+        layer.alert("食物名称不能为空！");
+        return;
+    }
+    $.ajax({
+        url:"getFoodCal",
+        type:"post",
+        dataType:"json",
+        data:{
+            foodName
+        },
+        success:function(resp){
+            if (resp.errmsg === 'ok'){
+                foodCal(resp.data.foodCal);
+                return;
+            }
+            layer.alert(resp.errmsg);
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+
+}
+
+function foodCal(foodCal){
+    if (foodCal=='') {
+        $('#cals').val('无查询结果');
+        return
+    }
+
+    var cal = Number(foodCal);
+    var weight = $('#foodWeight').val();
+    if (weight=='') {
+        weight=100;
+        $('#foodWeight').val(100);
+    }
+    cal = (weight/100)*cal;
+    $('#cals').val(cal);
+    
+}
+
+//重置
+function reFindFood(){
+    clearInput();
+}
+function addOk(){
+    var food1 = $('#food1').val().trim();
+    var food2 = $('#food2').val().trim();
+    var food3 = $('#food3').val().trim();
+    var food4 = $('#food4').val().trim();
+    var weight1 = $('#weight1').val();
+    var weight2 = $('#weight2').val();
+    var weight3 = $('#weight3').val();
+    var weight4 = $('#weight4').val();
+    if (food1=='') {
+        food1='早：无'
+    }else{
+        food1='早：'+food1+weight1+'g';
+    }
+    if (food2=='') {
+        food2=',午：无'
+    }else{
+        food2=',午：'+food2+weight2+'g';
+    }
+    if (food3=='') {
+        food3=',晚：无'
+    }else{
+        food3=',晚：'+food3+weight3+'g';
+    }
+    if (food4=='') {
+        food4=',加：无'
+    }else{
+        food4=',加：'+food4+weight4+'g';
+    }
+    var foodInfo = food1+food2+food3+food4;
+
+
+    //计算每日所需卡路里
+    var calNeed = 0;
+    if (sex == '男') {
+        calNeed = 66+(13.7*weight)+(5*height)-170;
+    }else{
+        calNeed = 655+(9.6*weight)+(1.8*height)-117.5;
+    }
+
+
+
+
+
+    var exerciseLevel = $('#exerciseLevel').val();
+    switch (exerciseLevel) {
+        case '1':
+            calNeed = 1.2*calNeed;
+            break;
+        case '2':
+            calNeed = 1.375*calNeed;
+            break;
+        case '3':
+            calNeed = 1.55*calNeed;
+            break;
+        case '4':
+            calNeed = 1.725*calNeed;
+            break;
+        case '5':
+            calNeed = 1.9*calNeed;
+            break;
+        default:
+            break;
+    }
+
+    //计算今日摄入卡路里量
+    var cal1 = $('#cal1').val();
+    var cal2 = $('#cal2').val();
+    var cal3 = $('#cal3').val();
+    var cal4 = $('#cal4').val();
+    var calReal = Number(cal1)+Number(cal2)+Number(cal3)+Number(cal4);
+
+    var calGoal = calReal - calNeed;
+
+    var exerciseTime = $('#exerciseTime').val();
+    if (exerciseTime=='') {
+        exerciseTime=0;
+    }
+
+    console.log(foodInfo+','+exerciseTime+','+exerciseLevel+','+calNeed+','+calReal+','+calGoal);
+
+    //提交表单数据
+
+    $.ajax({
+        url:"addHealthInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+            foodInfo,
+            exerciseTime,
+            exerciseLevel,
+            calNeed,
+            calReal,
+            calGoal
+        },
+        success:function(resp){
+            if (resp.errmsg === 'ok'){
+                //-----关闭modal-------//
+                getHealthInfo();
+                $('#myModal').modal('hide', 'fit');
+                layer.alert("添加成功");
+                clearInput();
+                //----------获取用户打卡数据--------//
+                
+                return ;
+            }
+            
+            layer.alert(resp.errmsg);
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+
+}
+
+
+
+
+//清空input的数据
+function clearInput(){
+    var spans=document.getElementsByTagName("input");//获取html中的所有的input标签
+	for(var j=0;j<spans.length;j++){              
+	var span = spans[j];       // input标签的数组                  
+	document.getElementById(span.id).value ="";
+    }
+}
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"  content="width=device-width,initial-scale=1.0,maxinum-scale=1.0,minimun-scale=1.0,user-scalable=0"/>
+    <title>健身系统-用户登录</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/zui.min.css"/>
+    <link rel="stylesheet" type="text/css"  href="/static/css/login.css"/>
+</head>
+<body style="background: url(/static/img/loginBg.png)">
+
+	<div class="box">
+		    <h1>欢迎使用健身系统平台</h1>
+		  <!-- <form> -->
+		    <div class="inputBox">
+				  <input type="text" id="accName" name="" required="" >
+				  <label>账号</label>
+		    </div>
+		    <div class="inputBox">
+				<input type="password" id="passWord" name="" required="" >
+				<label>密码</label>
+		    </div>
+			<div class="inputBox">
+                <input type="text" name="" id="code" required="" style="width: 60%;" >
+                <img style="width: 40%;height: 40px;cursor: pointer" src="code" id="imgCode" onclick="Code()"/>
+				<label>验证码</label>
+			</div>
+			<button onclick="doLogin()">登录</button>
+			  <!-- </form> -->
+			<div style="text-align: right;font-size: 15px;">
+				<p> <a href="register" style="color: yellowgreen">立即注册</a></p>
+			</div>
+<!--			<div style="text-align: right;font-size: 15px;">-->
+<!--				<p> <a href="backLogin" style="color: yellowgreen">后台管理员登录</a></p>-->
+<!--			</div>-->
+			  
+	</div>
+<script src="/static/js/jquery-2.1.4.js"></script>
+<script src="/static/js/zui.min.js"></script>
+<script src="/static/js/layer/layer.js"></script>
+<script src="/static/js/front/login.js"></script>
+</body>
+</html>

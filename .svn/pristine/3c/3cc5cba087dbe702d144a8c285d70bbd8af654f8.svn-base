@@ -1,0 +1,61 @@
+
+//获取登录用户的信息,并且显示到上方信息栏
+getUserInfo();
+
+function getUserInfo(){
+    var userInfo = document.getElementById("userInfo");
+
+    $.ajax({
+        url:"getUserInfo",
+        type:"post",
+        dataType:"json",
+        data:{
+
+        },
+        success:function(data){
+            if (data.errmsg==='ok'){
+                var userName = data.data.data.userName;
+                userInfo.innerHTML=userName+',欢迎您！';
+                return;
+            }
+            // location.href = "login";
+        },
+        error:function(err){
+            console.log(err);
+        }
+    })
+}
+
+//iframe切换
+function iframe(url){
+    $('#iframe').attr("src",url);
+    console.log(url);
+}
+//退出
+function exit(){
+    layer.confirm('是否退出？', {
+        btn: ['是','点错了'] //按钮
+    }, function(){
+        $.ajax({
+            url:"exit",
+            type:"post",
+            dataType:"json",
+            data:{
+
+            },
+            success:function(data){
+                if (data.errmsg==='ok'){
+                    location.href=data.data.location
+                    return;
+                }
+                layer.msg(data.errmsg);
+            },
+
+            error:function(err){
+                console.log(err)
+            }
+        })
+    }, function(){
+        return;
+    });
+}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/zui.css"/>
+		<link href="/static/lib/datetimepicker/datetimepicker.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/static/css/user.css"/>
+	</head>
+
+	<body>
+		 <ul class="nav nav-tabs">
+			<li class="active"  style="width: 50%;text-align: center;" ><a href="###" data-target="#table1" data-toggle="tab">我的信息</a></li>
+			<li  style="width: 50%;text-align: center;"><a href="###" data-target="#table2" data-toggle="tab">修改密码</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="table1">
+				<p>
+					<div class="userinfo"  id="userinfo">
+						<h2>我的信息</h2>
+					<div class="input-group">
+					    <span>账号名</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="acc" readonly="">
+					</div>
+					<div class="input-group">
+					    <span>个人昵称</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="userName" readonly="">
+					</div>
+					<div class="input-group">
+					    <span>性别</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="sex" readonly="">
+					</div>
+					<div class="input-group">
+					    <span>身高</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="height" readonly="">
+					</div>
+					<div class="input-group">
+					    <span>体重</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="weight" readonly="">
+					</div>
+					<div class="input-group">
+					    <span>健身目标</span>
+					    <input type="text" style="background-color: white;" class="form-control" id="goal" readonly="">
+					</div>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatUser-button">修改个人信息</button>
+					</div>
+				
+				</p>
+			</div>
+			
+			<div class="tab-pane fade" id="table2">
+			    <p>
+			   						  <h2>修改密码</h2>
+			   	                   <div class="input-group">
+			   	                   	<span class="input-group-addon">旧密码</span>
+			   	                   	 <input type="password" class="form-control" id="oldpsw" placeholder="旧密码">
+			   	                   
+			   	                   </div>
+			   	                  <div class="input-group">
+			   	                  	<span class="input-group-addon">新密码</span>
+			   	                  	 <input type="password" class="form-control" id="oldpsw2" placeholder="确认密码">
+			   	                  
+			   	                  </div>
+			   	                  <div class="input-group">
+			   	                  	<span class="input-group-addon">确认密码</span>
+			   	                  	 <input type="password" class="form-control" id="newpsw" placeholder="新密码">
+			   	                  </div>
+									<div>
+										<button type="button" class="btn btn-primary" onclick="updatePassword()" >修改</button>
+									</div>
+			   	                  </p>
+			</div>	
+		</div>
+
+
+		 <div class="modal fade" id="updatUser-button">
+			 <div class="modal-dialog">
+				 <div class="modal-content">
+					 <div class="modal-header">
+						 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+						 <h4 class="modal-title">用户信息修改</h4>
+					 </div>
+					 <div class="modal-body myform">
+						 <div class="input-group">
+							 <span class="input-group-addon">个人昵称</span>
+							 <input type="text" class="form-control" id="updateUserName" placeholder="请输入个人昵称">
+						 </div>
+						 <div class="input-group">
+							 <span class="input-group-addon" id="sexspan" >性别</span>
+							 <div class="form-control" id="spandiv">
+								 <label class="radio-inline">
+									 <input style="margin-left: 20px;" type="radio" name="sex" value="男" checked="true">男
+								 </label>
+								 <label class="radio-inline">
+									 <input style="margin-left: 20px;" type="radio" name="sex" value="女">女
+								 </label>
+							 </div>
+						 </div>
+						 <div class="input-group">
+							 <span class="input-group-addon">身高</span>
+							 <input type="text" class="form-control" id="updateHeight" placeholder="输入身高" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+						 </div>
+
+						 <div class="input-group">
+							 <span class="input-group-addon">体重</span>
+							 <input type="text" class="form-control"  id="updateWeight" placeholder="输入体重" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1')">
+						 </div>
+						 <div class="input-group"  id="divs">
+							 <span class="input-group-addon">健身目标</i></span>
+							 <div class="form-control">
+								 <label class="radio-inline">
+									 <input type="radio" name="goal" value="1" checked="checked" class="goal"> 减脂
+								 </label>
+								 <label class="radio-inline">
+									 <input type="radio" name="goal" value="2" class="goal"> 塑形
+								 </label>
+								 <label class="radio-inline">
+									 <input type="radio" name="goal" value="3" class="goal"> 增重
+								 </label>
+								 <label class="radio-inline">
+									 <input type="radio" name="goal" value="4" class="goal"> 增肌
+								 </label>
+								 <label class="radio-inline">
+									 <input type="radio" name="goal" value="5" class="goal"> 其它
+								 </label>
+							 </div>
+						 </div>
+
+
+					 </div>
+					 <div class="modal-footer">
+						 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						 <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="updateUserInfo()">保存</button>
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+	
+		<script src="/static/js/jquery-2.1.4.js"></script>
+		<script src="/static/js/zui.min.js" type="text/javascript" charset="utf-8"></script>
+		 <script src="/static/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		 <script src="/static/lib/datetimepicker/datetimepicker.min.js"></script>
+		 <script src="/static/js/front/personCenter.js"></script>
+
+	</body>
+</html>

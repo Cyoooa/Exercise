@@ -1,0 +1,129 @@
+body{
+	width: 100%;
+	height: 100%;
+}
+
+video{  
+          position: fixed;
+           right: 0px;  
+           bottom: 0px;  
+           min-width: 100%;  
+           min-height: 100%;  
+           height: auto;  
+           width: auto; 
+            /*加滤镜*/
+            /*filter: blur(15px); //背景模糊设置 */
+            /*-webkit-filter: grayscale(100%);*/  
+            /*filter:grayscale(100%); //背景灰度设置*/  
+            z-index:-11
+        }  
+        source{  
+            min-width: 100%;  
+            min-height: 100%;  
+            height: auto;  
+            width: auto;  
+			display: none;
+        }
+
+.box
+{
+	font-size: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width:600px;
+ 	padding: 40px;
+	background:rgba(60,63,65,0.9);
+	box-sizing:border-box;/
+	box-shadow:0 15px 25px rgba(0,0,0,.5);
+	border-radius: 10px;/*登录窗口边角圆滑*/
+}
+.box h1
+{
+	margin:0 0 30px;
+	padding:0;
+	color:#fff;
+	text-align:center;
+	}
+	.box .inputBox
+	{
+		position:relative;
+	}
+.box .inputBox input
+{
+	width: 100%;
+	padding: 10px 0;
+	font-side:16px;
+	color: #fff;
+	letter-spacing: 1px;
+	margin-bottom:30px;/*输入框设置*/
+	border:none;
+	border-bottom:1px solid #fff;
+	outline:none;
+	background:transparent;
+}
+.box .inputBox label
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: greenyellow;
+    pointer-events: none;
+    transition: .5s;
+}
+.box .inputBox input:focus ~ label,
+.box .inputBox input:valid ~ label
+{
+    top: -18px;
+	left: 0;
+	color: greenyellow;
+	font-size: 12px;
+}
+.box  input[type="submit"] 
+{	
+	margin-right: 100px;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+	background: #03a9f4;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	text-align: center;
+	
+}
+
+.box .inputBox select
+{
+    position: absolute;
+    top: 0;
+    left: 30;
+    padding: 10px 0;
+    font-size: 25px;
+    color: greenyellow;
+    pointer-events: none;
+    transition: .5s;
+}
+
+
+#imgCode{
+	border-radius: 15px;
+}
+button{
+	width: 100px;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+	background: #03a9f4;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	/* text-align: center; */
+	/* margin: 0px auto; */
+	margin-left: 200px;
+}

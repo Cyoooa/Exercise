@@ -1,0 +1,171 @@
+//获取热门文档信息
+getHotVideo();
+var pageSize = 12;
+var currPage = 1;
+var totalPage = 1;
+function getHotVideo() {
+	var docName = document.getElementById("docName").value;
+	if (docName==null){
+		docName="";
+	}
+	$.ajax({
+		url: "getHotVideo",
+		type: "post",
+		dataType: "JSON",
+		data: {
+			pageSize,
+			currPage,
+			videoName:docName
+		},
+		success: function(resp) {
+            if (resp.errmsg === 'ok'){
+				showHotDocument(resp.data.videoInfo);
+				return;
+            }
+            
+            layer.alert(resp.errmsg);
+        },
+        error: function(err) {
+            console.log(err)
+        }
+	})
+}
+
+function showHotDocument(data) {
+	var hot = '';
+
+	for (var i  = 0; i < data.length; i++) {
+		//` 反引号。在1的坐标
+		//反引号，除了可以换行，还可以嵌套变量
+		var a = data[i];
+		hot +=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick="detail('${a.videoUrl}','${a.videoName}','${a.videoId}')">
+						<div class="doc-image">
+							<img src="${a.imgUrl}">
+						</div>
+						<div class="doc-title">
+							${a.videoName}
+						</div>
+						<div class="doc-desc">
+							<a class="doc-auther">所属模块：${a.types}</a>
+							<a class="doc-download">热门度：${a.hot}</a>
+						</div>
+					</div>	
+				</div>`
+	}
+	document.getElementById("hot-document-list").innerHTML = hot;
+}
+
+
+function showNewDocument(data) {
+	var news = '';
+	for (var i  = 0; i < data.length; i++) {
+		//` 反引号。在1的坐标
+		//反引号，除了可以换行，还可以嵌套变量
+		var a = data[i];
+		news +=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick="detail('${a.videoUrl}','${a.videoName}','${a.videoId}')">
+						<div class="doc-image">
+							<img src="${a.url}">
+						</div>
+						<div class="doc-title">
+							${a.doc_Name}
+						</div>
+						<div class="doc-desc">
+							<a class="doc-auther">上传人：${a.acc}</a>
+							<a class="doc-download">下载量：${a.hot}</a>
+						</div>
+					</div>	
+				</div>`
+	}
+	document.getElementById("new-document-list").innerHTML = news;
+}
+
+function docSearch() {
+	var docName = document.getElementById("docName").value;
+	if (docName==null){
+		docName="";
+	}
+	$.ajax({
+		url: "getHotVideo",
+		type: "post",
+		dataType: "JSON",
+		data: {
+			pageSize,
+			currPage,
+			videoName:docName
+		},
+		success: function(resp) {
+            if (resp.errmsg === 'ok'){
+				showDocument(resp.data.videoInfo);
+				return;
+            }
+            
+            layer.alert(resp.errmsg);
+        },
+        error: function(err) {
+            console.log(err)
+        }
+	})
+}
+
+function showDocument(data) {
+	document.getElementById("hot-document").innerHTML = "";
+	var news = `<div class="container">
+                <h2>搜索结果</h2>
+                <div class="row" id="hot-document-list">`
+	for (let i = 0; i <data.length ; i++) {
+		var a = data[i];
+		news +=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick= function(){
+					    location.href="${a.videoUrl}";
+					}>
+						<div class="doc-image">
+							<img src="${a.imgUrl}">
+						</div>
+						<div class="doc-title">
+							${a.videoName}
+						</div>
+						<div class="doc-desc">
+							<a class="doc-auther">所属模块：${a.types}</a>
+							<a class="doc-download">热门度：${a.hot}</a>
+						</div>
+					</div>	
+				</div>`
+	}
+	news+=`</div>
+            </div>`
+
+	document.getElementById("hot-document").innerHTML = news;
+
+
+}
+
+function detail(videoUrl,videoName,videoId) {
+	$("#videos").attr("src", videoUrl);
+    $("#videoName").html(videoName);
+	$('#myModal').modal();
+	//为其增加热度
+	$.ajax({
+		url: "addHot",
+		type: "post",
+		dataType: "JSON",
+		data: {
+			videoId
+		},
+		success: function(resp) {
+			if (resp.errmsg === 'ok'){
+				return;
+			}
+
+			layer.alert(resp.errmsg);
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}
+
+$('#myModal').on('hide.zui.modal', function() {
+    $("#videos").attr("src", "###");
+})

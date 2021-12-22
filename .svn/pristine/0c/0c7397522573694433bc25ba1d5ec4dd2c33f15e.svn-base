@@ -1,0 +1,50 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import sun.java2d.pipe.AAShapePipe;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
+@ResponseBody
+public class BodyController {
+    @Resource
+    private UserService userService;
+    @PostMapping("/getBodyInfo")
+    public String getBodyInfo(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        List<BodyInfo> bodyInfos = userService.getBodyInfo(userId);
+        return null;
+    }
+
+
+
+
+
+    @PostMapping("/addBodyCard")
+    public String addBodyCard(String height, String weight, String bodyPercent, String muscle,String bmi, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (bodyPercent==null||"".equals(bodyPercent)){
+            bodyPercent="0";
+        }
+        if (muscle==null||"".equals(muscle)){
+            muscle="0";
+        }
+        BodyInfo bodyInfo = new BodyInfo(0,user.getUserId(),Double.valueOf(height),Double.valueOf(weight),Double.valueOf(bodyPercent),Double.valueOf(muscle),Double.valueOf(bmi));
+        boolean is = userService.addBodyCard(bodyInfo);
+        if (!is){
+            return Ajax.error("添加失败，请稍后重试");
+        }
+        return Ajax.success();
+    }
+
+}

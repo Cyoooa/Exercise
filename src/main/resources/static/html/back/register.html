@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/zui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/register.css" />
+    <title>健身系统-用户注册</title>
+</head>
+<body style="background: url(/static/img/regImg.jpg)">
+    <div id="box">
+        <div id="login‐box" >
+              <div class="logintext">
+                  <span>用户注册</span>
+              </div>
+              <div class="input-group"  id="divs">
+                <span class="input-group-addon"><i class="icon icon-user"></i></span>
+                <input type="text" class="form-control" placeholder="请输入昵称" id="userName">
+              </div>
+              <div class="input-group"  id="divs">
+                <span class="input-group-addon"><i class="icon icon-user"></i></span>
+                <input type="text" class="form-control" placeholder="请输入账号" id="acc" onkeyup="value=value.replace(/[^\w]{,16}/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\w]/g,''))">
+              </div>
+              <div class="input-group"  id="divs">
+                <span class="input-group-addon"><i class="icon icon-lock"></i></span>
+                <input type="password" class="form-control" placeholder="请输入密码" id="psw">
+              </div>
+              <div class="input-group"  id="divs">
+                <span class="input-group-addon"><i class="icon icon-lock"></i></span>
+                <input type="password" class="form-control" placeholder="请再次输入密码" id="repsw">
+              </div>
+            <div class="input-group"  id="divs">
+                <span class="input-group-addon">性别</i></span>
+                <div class="form-control">
+                    <label class="radio-inline">
+                        <input type="radio" name="radioOptionsExample" value="男" checked="checked" class="sex"> 男
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radioOptionsExample" value="女" class="sex"> 女
+                    </label>
+                </div>
+            </div>
+            <div class="input-group"  id="divs">
+                <span class="input-group-addon"><i class="icon icon-user"></i></span>
+                <input type="text" class="form-control" placeholder="请输入电话" id="phone">
+            </div>
+              <div class="text-center">
+                <button class="btn btn-success " type="button" style="width: 90%;margin: 15px auto;" onclick="reg()">立即注册</button>
+              </div>
+              <div class="text-center">
+        </div>
+    </div>
+    <script src="/static/js/jquery-2.1.4.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+        <script src="/static/js/back/register.js"></script>
+
+</body>
+</html>

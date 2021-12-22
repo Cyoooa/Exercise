@@ -1,0 +1,30 @@
+package com.hxx.exercise.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description User对象
+ * @date 2021/3/16 13:53
+ */
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class User {
+    private Integer userId;
+    private String userName;
+    private String sex;
+    private String acc;
+    private String psw;
+    private Integer roleId;
+    private Integer statusId;
+    private double height;
+    private double weight;
+    private Integer goalType;
+
+}

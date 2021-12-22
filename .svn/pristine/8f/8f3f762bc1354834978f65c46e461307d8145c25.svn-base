@@ -1,0 +1,35 @@
+package com.hxx.exercise.service.Impl;
+
+import com.hxx.exercise.dao.UserDao;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:10
+ */
+@Service
+public class UserServiceImpl implements UserService {
+    @Resource
+    UserDao userDao;
+
+    @Override
+    public User login(String accName) {
+        return userDao.login(accName);
+    }
+
+    @Override
+    public User isAcc(String acc) {
+        return userDao.isAcc(acc);
+    }
+
+    @Override
+    public boolean reg(User user) {
+        return userDao.reg(user);
+    }
+}

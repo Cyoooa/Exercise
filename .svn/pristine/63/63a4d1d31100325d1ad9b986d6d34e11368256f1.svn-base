@@ -1,0 +1,88 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+
+@Controller
+@ResponseBody
+public class BodyController {
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/getBodyInfo")
+    public String getBodyInfo(HttpSession session,String btime,String etime,String pageSize,String currPage){
+//        System.out.println("到这了");
+        if (btime==null||"".equals(btime)){
+            btime = null;
+        }else {
+            btime+= " 00:00:00";
+        }
+        if (etime==null||"".equals(etime)){
+            etime = null;
+        }else {
+            etime+= " 23:59:59";
+        }
+        int curr = 1;
+        int size = 1000;
+        if (currPage!=null){
+            curr = Integer.parseInt(currPage);
+            size = Integer.parseInt(pageSize);
+        }
+        int beginIndex = (curr-1)*size+1;
+        int lastIndex = beginIndex+size;
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        List<BodyInfo> bodyInfos = userService.getBodyInfo(userId,btime,etime,beginIndex, lastIndex);
+        int count = userService.getBodyInfoCount(userId,btime,etime);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("bodyInfo",bodyInfos);
+        map.put("count",count);
+        return Ajax.success(map);
+
+    }
+
+
+
+
+
+    @PostMapping("/addBodyCard")
+    public String addBodyCard(String height, String weight, String bodyPercent, String muscle,String bmi, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (bodyPercent==null||"".equals(bodyPercent)){
+            bodyPercent="0";
+        }
+        if (muscle==null||"".equals(muscle)){
+            muscle="0";
+        }
+        BodyInfo bodyInfo = new BodyInfo(0,user.getUserId(),Double.valueOf(height),Double.valueOf(weight),Double.valueOf(bodyPercent),Double.valueOf(muscle),Double.valueOf(bmi),null);
+        boolean is = userService.addBodyCard(bodyInfo);
+        if (!is){
+            return Ajax.error("添加失败，请稍后重试");
+        }
+
+        //更新用户初始体重指标
+        boolean isChangeInit = userService.changeInit(bodyInfo);
+        System.out.println(isChangeInit);
+        return Ajax.success();
+    }
+
+    @PostMapping("/delBodyInfo")
+    public String delBodyInfo(String bodyId){
+        boolean is = userService.delBodyInfo(bodyId);
+        if (!is){
+            return Ajax.error("删除失败，请稍后再试");
+        }
+
+        return Ajax.success();
+    }
+
+}

@@ -1,0 +1,91 @@
+package com.hxx.exercise.pojo;
+
+public class BodyInfo {
+    private Integer bodyId;
+    private Integer userId;
+    private double height;
+    private double weight;
+    private double bodyPercent;
+    private double muscle;
+    private double bmi;
+    private String bodyTime;
+
+
+    public BodyInfo() {
+    }
+
+    public BodyInfo(Integer bodyId, Integer userId, double height, double weight, double bodyPercent, double muscle, double bmi, String bodyTime) {
+        this.bodyId = bodyId;
+        this.userId = userId;
+        this.height = height;
+        this.weight = weight;
+        this.bodyPercent = bodyPercent;
+        this.muscle = muscle;
+        this.bmi = bmi;
+        this.bodyTime = bodyTime;
+    }
+
+    public Integer getBodyId() {
+        return bodyId;
+    }
+
+    public void setBodyId(Integer bodyId) {
+        this.bodyId = bodyId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getBodyPercent() {
+        return bodyPercent;
+    }
+
+    public void setBodyPercent(double bodyPercent) {
+        this.bodyPercent = bodyPercent;
+    }
+
+    public double getMuscle() {
+        return muscle;
+    }
+
+    public void setMuscle(double muscle) {
+        this.muscle = muscle;
+    }
+
+    public double getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(double bmi) {
+        this.bmi = bmi;
+    }
+
+    public String getBodyTime() {
+        return bodyTime;
+    }
+
+    public void setBodyTime(String bodyTime) {
+        this.bodyTime = bodyTime;
+    }
+}

@@ -1,0 +1,47 @@
+#table1{
+	width: 30%;
+	margin: 0px auto;
+	
+}
+#table2{
+	width: 30%;
+	margin: 0px auto;
+	margin-top: 100px;
+}
+
+#table2 div{
+	margin-top: 20px;
+}
+
+#table2 button{
+	margin-top: 10px;
+	margin: 0px auto;
+}
+.myform div:not(#spandiv){
+	margin-top: 10px;
+	width: 400px;
+}
+.myform{
+	margin-left: 100px;
+}
+.myform span{
+	width: 80px;
+	height: 32px;
+}
+
+#div{
+	width: 260px;
+}
+button{
+	margin-top: 10px;
+}
+
+.userinfo{
+	margin: 0px auto;
+}
+.userinfo div,button,h2{
+	margin-left: 100px;
+}
+.userinfo div{
+	width: 200px;
+}

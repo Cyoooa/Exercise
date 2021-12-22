@@ -1,0 +1,53 @@
+package com.hxx.exercise.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description:页面切换控制器
+ * @date 2021/3/16 10:53
+ */
+@Controller
+
+public class PageController {
+
+    //登录界面
+    @GetMapping("/login")
+    public String login(){
+        return "front/login";
+    }
+    //注册界面
+    @GetMapping("/register")
+    public String register(){
+        return "front/register";
+    }
+
+    //首页
+    @GetMapping("/index")
+    public String index(){
+        return "front/index";
+    }
+
+    @GetMapping("/welcome")
+    public String welcome(){
+        return "front/welcome";
+    }
+
+    @GetMapping("/bodyCard")
+    public String bodyCard(){
+        return "front/bodyCard";
+    }
+
+
+    @GetMapping("/healthCard")
+    public String healthCard(){
+        return "front/healthCard";
+    }
+
+    @GetMapping("/personCenter")
+    public String personCenter(){
+        return "front/personCenter";
+    }
+}

@@ -1,0 +1,70 @@
+package com.hxx.exercise.pojo;
+
+public class VideoInfo {
+    private Integer videoId;
+    private String videoName;
+    private String imgUrl;
+    private String videoUrl;
+    private String types;
+    private Integer hot;
+
+    public VideoInfo() {
+    }
+
+    public VideoInfo(Integer videoId, String videoName, String imgUrl, String videoUrl, String types, Integer hot) {
+        this.videoId = videoId;
+        this.videoName = videoName;
+        this.imgUrl = imgUrl;
+        this.videoUrl = videoUrl;
+        this.types = types;
+        this.hot = hot;
+    }
+
+    public Integer getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(Integer videoId) {
+        this.videoId = videoId;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getTypes() {
+        return types;
+    }
+
+    public void setTypes(String types) {
+        this.types = types;
+    }
+
+    public Integer getHot() {
+        return hot;
+    }
+
+    public void setHot(Integer hot) {
+        this.hot = hot;
+    }
+}

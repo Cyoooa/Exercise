@@ -1,0 +1,42 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.VideoInfo;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+
+@Controller
+@ResponseBody
+public class VideoController {
+
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/getHotVideo")
+    public String getHotVideo(String pageSize,String currPage,String videoName){
+        if ("".equals(videoName)){
+            videoName=null;
+        }else {
+            videoName = videoName.trim();
+            videoName = "%"+videoName+"%";
+        }
+        int curr = 1;
+        int size = 1000;
+        if (currPage!=null){
+            curr = Integer.parseInt(currPage);
+            size = Integer.parseInt(pageSize);
+        }
+        int beginIndex = (curr-1)*size+1;
+        int lastIndex = beginIndex+size;
+        List<VideoInfo> videoInfos = userService.getHotVideo(beginIndex,lastIndex,videoName);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("videoInfo",videoInfos);
+        return Ajax.success(map);
+    }
+}

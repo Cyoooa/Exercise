@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+
+debug: true
+spring:
+  mvc:
+    static-path-pattern: /static/**
+    #视图解析器
+    view:
+      prefix: /static/html/
+      suffix: .html
+    #数据库连接localhost
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/exercise?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 500MB
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+

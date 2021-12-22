@@ -1,0 +1,31 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.User;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+@Controller
+@ResponseBody
+public class WelcomeController {
+
+    @Resource
+    private UserService userService;
+    //获取当前用户打卡次数
+    @PostMapping("/getCountCard")
+    public String getCountCard(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        int userId = user.getUserId();
+        //获取健康打卡次数
+        int countBody = userService.getBodyInfoCount(userId,null,null);
+        int countHealth = userService.getHealthInfoCount(userId,null,null);
+        int count = countBody+countHealth;
+        return Ajax.success("count",count);
+
+    }
+}

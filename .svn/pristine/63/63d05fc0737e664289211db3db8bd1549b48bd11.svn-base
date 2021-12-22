@@ -1,0 +1,39 @@
+
+
+# 应用服务 WEB 访问端口,默认为8080
+#server:
+#  port: 80
+
+
+debug: true
+spring:
+  mvc:
+    static-path-pattern: /static/**
+    #视图解析器
+    view:
+      prefix: /static/html/
+      suffix: .html
+    #数据库连接localhost
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: EXERCISE
+    password: 123
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 500MB
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.exercise.dao: debug
+
+# 在此填写文件的保存位置
+videoWebPath: /file/video/
+videoFilePath: E:\File\video\
+imgWebPath: /file/img/
+imgFilePath: E:\File\img\

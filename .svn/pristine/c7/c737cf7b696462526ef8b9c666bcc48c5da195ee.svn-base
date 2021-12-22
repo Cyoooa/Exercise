@@ -1,0 +1,75 @@
+function reg() {
+    var userName = document.getElementById("userName").value;
+    var acc = document.getElementById("acc").value;
+    var psw = document.getElementById("psw").value;
+    var height = document.getElementById("height").value;
+    var weight = document.getElementById("weight").value;
+    var goalType = document.getElementsByClassName("goal");
+    var goalTypes = "";
+    for (var i = 0; i < goalType.length; i++) {
+        if (goalType[i].checked){
+            goalTypes = goalType[i].value;
+        }
+    }
+
+    var sex = document.getElementsByClassName("sex");
+    var sexs = "";
+    for (var i = 0; i < sex.length; i++) {
+        if (sex[i].checked){
+            sexs = sex[i].value;
+        }
+    }
+    if (userName == ""){
+        layer.alert("请输入用户名！");
+        return;
+    }
+    if (acc == ""){
+        layer.alert("请输入账号！");
+        return;
+    }
+    if (psw == ""){
+        layer.alert("请输入密码！");
+        return;
+    }
+    if (repsw == ""){
+        layer.alert("请再次输入密码！");
+        return;
+    }
+    if (height == ""){
+        layer.alert("请输入身高！");
+        return;
+    }
+    if (weight == ""){
+        layer.alert("请输入体重！");
+        return;
+    }
+
+    $.ajax({
+        url:"doRegister",
+        type:"post",
+        dataType:"JSON",
+        data:{
+            userName,
+            acc,
+            psw,
+            sex:sexs,
+            weight,
+            height,
+            goalType:goalTypes
+        },
+        success: function(resp) {
+            if (resp.errmsg === 'ok'){
+                layer.alert("注册成功！3秒后进入登录界面");
+                window.setTimeout("location.href= 'login'",3000);
+                // location.href = "login.html";
+                return ;
+                
+            }
+            layer.alert(resp.errmsg);
+
+        },
+        error: function(err) {
+            console.log(err)
+        }
+    })
+}

@@ -1,0 +1,28 @@
+
+//验证码
+function Code(){
+    var img=document.getElementById("imgCode");
+    img.src="code?p="+new Date();
+}
+//登录方法
+function doLogin(){
+    var accName = $('#accName').val();
+    var passWord = $('#passWord').val();
+    var code = $('#code').val();
+    $.ajax({
+        url :"doLogin",
+        type : 'POST',
+        dataType : 'JSON',
+        data:{
+            accName,passWord,code
+        },
+        success:function (resp){
+            if(resp.errmsg === 'ok'){
+                location.href = resp.data.location;
+                return ;
+            }
+            layer.alert(resp.errmsg,{icon: 2});
+            Code();
+        }
+    })
+}

@@ -1,0 +1,180 @@
+//更新导航栏
+getTop();
+//获取热门文档信息
+getHotDocument();
+//获取最新文档信息
+getNewDocument();
+var pageSize = 12;
+var currpage = 1;
+var totalPage = 1;
+function getHotDocument() {
+	$.ajax({
+		url: "getHotDocument",
+		type: "post",
+		dataType: "JSON",
+		data: {
+
+		},
+		success: function(data) {
+			showHotDocument(data);
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}
+
+function getTop(){
+	$.ajax({
+		url: "getTop",
+		type: "post",
+		dataType: "JSON",
+		data: {
+
+		},
+		success: function(data) {
+			if (data=="无用户"){
+				return;
+			}
+			topShow(data);
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}
+function topShow(data) {
+	var right = document.getElementById("navbar-right");
+	right.innerHTML="";
+	var str =`<li class="active"><a href="index.html">文档列表</a></li>
+                    <li><a href="#">${data}，欢迎您</a></li>
+                   <li><a href="main.html">个人中心</a></li>
+				`
+	right.innerHTML = str;
+
+}
+function getNewDocument() {
+	$.ajax({
+		url: "getNewDocument",
+		type: "post",
+		dataType: "JSON",
+		data: {
+
+		},
+		success: function(data) {
+			showNewDocument(data);
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}
+function showHotDocument(data) {
+	var hot = '';
+
+	for (var i  = 0; i < data.length; i++) {
+		//` 反引号。在1的坐标
+		//反引号，除了可以换行，还可以嵌套变量
+		var a = data[i];
+		hot +=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick="detail(${a.info_Id});">
+						<div class="doc-image">
+							<img src="${a.url}">
+						</div>
+						<div class="doc-title">
+							${a.doc_Name}
+						</div>
+						<div class="doc-desc">
+							<a class="doc-auther">上传人：${a.acc}</a>
+							<a class="doc-download">下载量：${a.hot}</a>
+						</div>
+					</div>	
+				</div>`
+	}
+	document.getElementById("hot-document-list").innerHTML = hot;
+}
+
+
+function showNewDocument(data) {
+	var news = '';
+	for (var i  = 0; i < data.length; i++) {
+		//` 反引号。在1的坐标
+		//反引号，除了可以换行，还可以嵌套变量
+		var a = data[i];
+		news +=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick="detail(${a.info_Id});">
+						<div class="doc-image">
+							<img src="${a.url}">
+						</div>
+						<div class="doc-title">
+							${a.doc_Name}
+						</div>
+						<div class="doc-desc">
+							<a class="doc-auther">上传人：${a.acc}</a>
+							<a class="doc-download">下载量：${a.hot}</a>
+						</div>
+					</div>	
+				</div>`
+	}
+	document.getElementById("new-document-list").innerHTML = news;
+}
+
+function docSearch() {
+	var docName = document.getElementById("docName").value;
+	if (docName==null){
+		docName="";
+	}
+	$.ajax({
+		url: "selectDoc",
+		type: "post",
+		dataType: "JSON",
+		data: {
+			currpage:currpage,
+			totalPage:totalPage,
+			pageSize:pageSize,
+			docName:docName
+		},
+		success: function(data) {
+			showDocument(data.docInfos);
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}
+
+function showDocument(data) {
+	document.getElementById("hot-document").innerHTML = "";
+	document.getElementById("new-document").innerHTML = "";
+	var str = `<div class="container">
+                <h2>搜索结果</h2>
+                <div class="row" id="hot-document-list">`
+	for (let i = 0; i <data.length ; i++) {
+		var a = data[i];
+		str+=`<div class="col-xs-6 col-sm-4 col-md-3">
+					<div class = "item-box" style="cursor: pointer" onclick="detail(${a.info_Id});">
+						<div class="doc-image">
+						<img src="${a.url}">
+						</div>
+						<div class="doc-title">
+						${a.doc_Name}
+						</div>
+						<div class="doc-desc">
+						<a class="doc-auther">上传人：${a.acc}</a>
+						<a class="doc-download">下载量：${a.hot}</a>
+						</div>
+				</div>	
+			</div>`
+	}
+	str+=`</div>
+            </div>`
+
+	document.getElementById("hot-document").innerHTML = str;
+
+
+}
+
+function detail(did) {
+
+	location.href="./detail.html?id="+did;
+}

@@ -1,0 +1,46 @@
+package com.hxx.exercise.service;
+
+import com.hxx.exercise.pojo.BodyInfo;
+import com.hxx.exercise.pojo.HealthInfo;
+import com.hxx.exercise.pojo.User;
+
+import java.util.List;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:08
+ */
+public interface UserService {
+    //登录
+    User login(String accName);
+
+    User isAcc(String acc);
+
+    boolean reg(User user);
+
+    boolean addBodyCard(BodyInfo bodyInfo);
+
+    List<BodyInfo> getBodyInfo(int userId, String btime, String etime, int beginIndex, int lastIndex);
+
+    int getBodyInfoCount(int userId, String btime, String etime);
+
+    boolean changeInit(BodyInfo bodyInfo);
+
+    boolean delBodyInfo(String bodyId);
+
+    boolean addHealthInfo(HealthInfo healthInfo);
+
+    String getFoodCal(String foodName);
+
+    List<HealthInfo> getHealthInfo(int userId, String btime, String etime, int beginIndex, int lastIndex);
+
+    int getHealthInfoCount(int userId, String btime, String etime);
+
+    boolean delHealthInfo(String healthId);
+
+    boolean updateUserInfo(int userId, String userName, String sex, String height, String weight, String goalType);
+
+    boolean updateUserPassword(int userId, String password);
+}

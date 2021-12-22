@@ -1,0 +1,58 @@
+package com.hxx.exercise.interceptor;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @author
+ * @version 1.0
+ * @description
+ * @date 2020/12/29 9:46
+ */
+@Configuration
+public class ResourceConfigAdapter implements WebMvcConfigurer {
+    @Value("${imgWebPath}")
+    String imgWebPath;
+
+    @Value("${imgFilePath}")
+    String imgFilePath;
+
+    @Value("${videoWebPath}")
+    String videoWebPath;
+
+    @Value("${videoFilePath}")
+    String videoFilePath;
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(imgWebPath+"**").addResourceLocations("file:"+imgFilePath);
+        registry.addResourceHandler(videoWebPath+"**").addResourceLocations("file:"+videoFilePath);
+
+
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/login")//排除登录页
+                .excludePathPatterns("/doLogin")//排除验证账号和密码
+                .excludePathPatterns("/code")//排除验证码
+                .excludePathPatterns("/file/img/**")//排除验证码
+                .excludePathPatterns("/file/video/**")//排除验证码
+                .excludePathPatterns("/file/doc/**")//排除验证码
+                .excludePathPatterns("/erro")
+                .excludePathPatterns("/school/insertSchool")
+                .excludePathPatterns("/classAnnDetail")
+                .excludePathPatterns("/static/**")
+                .excludePathPatterns("/Rsa")
+                .excludePathPatterns("/logInfo")//排除日志
+                .excludePathPatterns("/getLogInfo")//排除日志
+                .excludePathPatterns("/schoolNews")
+                .excludePathPatterns("/");//排除静态文件*/
+
+    }
+}

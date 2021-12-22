@@ -1,0 +1,27 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+
+@Controller
+@ResponseBody
+public class FoodController {
+
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/getFoodCal")
+    public String getFoodCal(String foodName){
+        String foodCal = userService.getFoodCal(foodName);
+        if (foodCal==null){
+            foodCal="";
+        }
+        System.out.println(foodCal);
+        return Ajax.success("foodCal",foodCal);
+    }
+}

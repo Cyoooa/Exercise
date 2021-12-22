@@ -1,0 +1,18 @@
+package com.hxx.exercise.service;
+
+import com.hxx.exercise.pojo.User;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/16 14:08
+ */
+public interface UserService {
+    //登录
+    User login(String accName);
+
+    User isAcc(String acc);
+
+    boolean reg(User user);
+}

@@ -1,0 +1,37 @@
+package com.hxx.exercise.controller;
+
+import com.cjl.Ajax;
+import com.hxx.exercise.pojo.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+
+/**
+ * @author hxx
+ * @version 1.0
+ * @description
+ * @date 2021/3/17 14:49
+ */
+@Controller
+@ResponseBody
+public class UserController {
+    @PostMapping("/getUserInfo")
+    public String getUserInfo(HttpSession session){
+        try {
+            User user = (User) session.getAttribute("user");
+//        if (user == null){
+//            return Ajax.error("当前用户未登录，即将退出系统！");
+//        }
+            System.out.println(user.getUserName());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("data",user);
+            return Ajax.success(map);
+        }catch (NullPointerException e){
+            return Ajax.error("用户未登录，处于强制进入状态");
+        }
+    }
+}
